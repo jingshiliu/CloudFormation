@@ -1,0 +1,46 @@
+[2024-02-26T23:29:47Z] DEBUG    - Logging set up successfully
+[2024-02-26T23:29:47Z] DEBUG    - Running validate: Namespace(version=False, subparser_name='validate', command=<function validate at 0x10eb9f9d0>, verbose=0)
+[2024-02-26T23:29:47Z] DEBUG    - Root directory: /Users/jingshiliu/Desktop/CloudFormation-Learning
+[2024-02-26T23:29:47Z] DEBUG    - Loading project file '/Users/jingshiliu/Desktop/CloudFormation-Learning/.rpdk-config'
+[2024-02-26T23:29:47Z] DEBUG    - Project file /Users/jingshiliu/Desktop/CloudFormation-Learning/.rpdk-config not found. Have you run 'init' or in a wrong directory?
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/rpdk/core/project.py", line 551, in load
+    self.load_settings()
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/rpdk/core/project.py", line 218, in load_settings
+    with self.settings_path.open("r", encoding="utf-8") as f:
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1252, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1120, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/jingshiliu/Desktop/CloudFormation-Learning/.rpdk-config'
+[2024-02-26T23:29:47Z] DEBUG    - Caught exit recommendation
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/rpdk/core/project.py", line 551, in load
+    self.load_settings()
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/rpdk/core/project.py", line 218, in load_settings
+    with self.settings_path.open("r", encoding="utf-8") as f:
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1252, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1120, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/jingshiliu/Desktop/CloudFormation-Learning/.rpdk-config'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/rpdk/core/cli.py", line 105, in main
+    args.command(args)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/rpdk/core/validate.py", line 14, in validate
+    project.load()
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/rpdk/core/project.py", line 553, in load
+    self._raise_invalid_project(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/rpdk/core/project.py", line 213, in _raise_invalid_project
+    raise InvalidProjectError(msg) from e
+rpdk.core.exceptions.InvalidProjectError: Project file /Users/jingshiliu/Desktop/CloudFormation-Learning/.rpdk-config not found. Have you run 'init' or in a wrong directory?
+[2024-02-26T23:29:47Z] CRITICAL - Project file /Users/jingshiliu/Desktop/CloudFormation-Learning/.rpdk-config not found. Have you run 'init' or in a wrong directory?
+[2024-02-26T23:29:53Z] DEBUG    - Logging set up successfully
+[2024-02-26T23:29:53Z] DEBUG    - Running None: Namespace(version=False, subparser_name=None, command=<function init at 0x10acffdc0>, verbose=0, force=False, type_name=None, artifact_type=None, endpoint_url=None, region=None, target_schemas=[], profile=None)
+[2024-02-26T23:29:53Z] DEBUG    - Root directory: /Users/jingshiliu/Desktop/CloudFormation-Learning
+[2024-02-26T23:29:53Z] WARNING  - Initializing new project
+[2024-02-26T23:29:53Z] DEBUG    - Loading project file '/Users/jingshiliu/Desktop/CloudFormation-Learning/.rpdk-config'
+[2024-02-26T23:30:17Z] DEBUG    - Resource type identifier: AWS::EC2::Instance

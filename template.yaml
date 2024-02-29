@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Infrastructure for studying cloudformation template
+Parameters:
+  ImageId:
+    Description: Amazon Linux 2023 AMI
+    Default: ami-0440d3b780d96b29d
+    Type: AWS::EC2::Image::Id
+  VpcId:
+    Description: VPC used by SG
+    Default: vpc-042310b6086b1a3a0
+    Type: String
+  SSHKeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Default: Bajor-EC2
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: Must be the name of an existing EC2 KeyPair.
+Resources:
+  WebServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: !Ref ImageId
+      SecurityGroupIds:
+        - !GetAtt WebServerSecurityGroup.GroupId
+      KeyName: !Ref SSHKeyName
+      Tags:
+        - Key: Name
+          Value: Webserver
+        - Key: Environment
+          Value: Hello
+      UserData:
+        "Fn::Base64": >-
+          #!/bin/bash
+          sudo su ec2-user
+          # Install Node.js version 20 with superuser privileges
+          sudo curl -sL https://rpm.nodesource.com/setup_20.x | sudo bash -
+          sudo yum install -y nodejs
+
+          sudo node --version
+          sudo npm --version
+
+          # Create a directory for the Express app
+          mkdir /home/ec2-user/express-app
+          cd /home/ec2-user/express-app
+
+          # Initialize a new Node.js project and install Express with superuser privileges
+          sudo npm init -y
+          sudo npm install express --save
+
+          # Create the Express server file
+          cat <<EOF > index.js
+          const express = require('express');
+          const app = express();
+          const port = 80;
+
+          app.get('/', (req, res) => {
+            res.send('Hello World!');
+          });
+
+          app.listen(port, () => {
+            console.log(\`Example app listening at http://localhost:\${port}\`);
+          });
+          EOF
+
+          # Ensure the app starts on server boot
+          echo "@reboot root node /home/ec2-user/express-app/index.js" | sudo tee -a /etc/crontab
+
+          # Start the Express app now
+          sudo node /home/ec2-user/express-app/index.js &
+
+  WebServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: >-
+        Description of WebServer Instance
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: "0.0.0.0/0"
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: "0.0.0.0/0"
+Outputs:
+  PublicIp:
+    Value: !GetAtt WebServer.PublicIp
